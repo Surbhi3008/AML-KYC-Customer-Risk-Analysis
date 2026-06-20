@@ -136,5 +136,7 @@ AML-KYC-Customer-Risk-Analysis/
 
 This project demonstrates how SQL and Excel dashboards can transform customer-level data into meaningful insights for AML/KYC risk assessment. By combining analytical queries with interactive visualizations, the project showcases practical applications of data analytics in financial crime compliance and risk management.
 
+## Author
+Surbhi Sharma Panchal
 
 
