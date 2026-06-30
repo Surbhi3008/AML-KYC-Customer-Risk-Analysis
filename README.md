@@ -35,8 +35,21 @@ The dataset models core KYC and behavioral banking metrics across 500 customer a
 3. **Data Normalization & Delivery:** The pipeline extracts active high-risk and PEP matrices dynamically, handles string-matching variances, and auto-generates a standardized, audit-ready compliance spreadsheet (`High_Risk_Compliance_Alerts.xlsx`) instantly.
 
 ## Key Insights & Governance Findings
-* **Targeted High-Risk Cohort:** Isolated a concentrated 34.8% segment (174 out of 500 accounts) classified as High Risk.Created a prioritized EDD queue using conditional CASE WHEN flags targeting individuals who are simultaneously PEPs AND originate from a High-Risk Country.
-* **Alert Optimization:** While Medium-Risk customers form the largest segment (277), a variance analysis indicates that tweaking the transaction volume threshold by 10% could safely reclassify low-risk activity, potentially reducing compliance alert volume by 15% without increasing risk exposure.
+* **Targeted High-Risk Cohort:** Isolated a concentrated 34.8% segment (174 out of 500 accounts) classified as High Risk.
+    ```sql
+  -- Prioritized EDD Queue Filter
+  SELECT 
+      customer_id, 
+      country, 
+      pep_status,
+      CASE 
+          WHEN pep_status = 'Yes' AND high_risk_country = 'Yes' THEN 'Immediate EDD Request'
+          WHEN pep_status = 'Yes' OR high_risk_country = 'Yes' THEN 'High Priority Review'
+          ELSE 'Standard Monitoring'
+      END AS edd_risk_flag
+  FROM compliance_database;
+  ```
+  * **Alert Optimization:** While Medium-Risk customers form the largest segment (277), a variance analysis indicates that tweaking the transaction volume threshold by 10% could safely reclassify low-risk activity, potentially reducing compliance alert volume by 15% without increasing risk exposure.
 * **Geographic Sanction Alignment:** Data revealed severe risk grouping concentrated in Russia (41 accounts), Syria (40 accounts), and Iran (36 accounts), which directly maps to active FATF high-risk jurisdictions under monitored call-for-action lists.
 * **PEP Vulnerability Disparity:** Politically Exposed Persons (PEPs) exhibited a substantially elevated average risk score (113.86) compared to non-PEP customers (95.10), validating the need for automated triggers for continuous account monitoring.
 * **Occupational Risk Concentration:** Risk scoring successfully flagged Politicians (103.4) and Business Owners (100.6) as primary risk vectors, aligning with Wolfsberg Group anti-bribery and corruption parameters, while salaried accounts maintained the lowest baseline threat vector (85.0).
