@@ -56,19 +56,19 @@ The dataset models core KYC and behavioral banking metrics across 500 customer a
 
 ## Repository Structure
 ```text
-AML-KYC-Customer-Risk-Analysis/
+Financial-Crime-Risk-Analysis/
 │
 ├── README.md
 ├── dataset/
 │   └── customers.csv
 ├── sql_queries/
-│   └── aml_kyc_analysis.sql
+│   └── Financial-Crime-Risk-Analysis.sql
 ├── python_pipeline/
 │   └── AML.py                     # Automated Data Extraction Engine
 ├── outputs/                       # Python-generated automation outputs
 │   └── High_Risk_Compliance_Alerts.xls                  
 ├── dashboard/
-│   └── AML_KYC_Dashboard.xlsx     # Interactive Visual Layer
+│   └── Financial-Crime-Risk-Analysis-Dashboard.xlsx     # Interactive Visual Layer
 └── screenshots/
     ├── dashboard.png
     └── execution_success.png
