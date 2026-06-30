@@ -65,6 +65,8 @@ AML-KYC-Customer-Risk-Analysis/
 │   └── aml_kyc_analysis.sql
 ├── python_pipeline/
 │   └── AML.py                     # Automated Data Extraction Engine
+├── outputs/                       # Python-generated automation outputs
+│   └── High_Risk_Compliance_Alerts.xls                  
 ├── dashboard/
 │   └── AML_KYC_Dashboard.xlsx     # Interactive Visual Layer
 └── screenshots/
