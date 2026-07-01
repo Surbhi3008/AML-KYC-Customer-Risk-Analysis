@@ -1,43 +1,46 @@
 
-# Financial-Crime-Risk-Analysis & Automation Pipeline
+# Financial Risk Analytics & Customer Segmentation Engine
+### Core Data Analytics, ETL Automation, & Financial Crime Risk Mitigation
 
 ## Project Overview
-This project delivers an enterprise-grade customer risk profiling and automation pipeline using PostgreSQL, Python, and Excel. The system focuses on identifying high-risk customers, evaluating geographic and occupational exposure based on international regulatory standards, and automating data delivery for Enhanced Due Diligence (EDD) workflows. An interactive Excel dashboard complements the automated backend to enable seamless compliance monitoring and data-driven decision-making.
+This project delivers an end-to-end data analytics and automation pipeline designed to profile customer risk metrics and streamline operational workflows using PostgreSQL, Python, and Microsoft Excel. By bridging core data engineering principles with risk analysis logic, the system automates database extraction, targets structural behavioral variances, and cleans text-matching matrices. 
 
-## Business Impact: 
-In a real banking environment, manual Enhanced Due Diligence (EDD) costs roughly $500 per customer profile. By segregating the 34.8% high-risk segment and cross-referencing them with PEP status, this analysis allows compliance teams to allocate expensive human investigator resources exclusively to high-yield risk targets, drastically reducing operational overhead.
+This project serves a dual-market purpose: demonstrating scalable, automated database-to-spreadsheet extraction workflows (Core Analytics) while executing targeted client risk monitoring frameworks for Enhanced Due Diligence (FinCrime Compliance).
 
- ## Dashboard Preview
+## Business Impact & Process Automation
+In production banking systems, manual spreadsheet extraction for Enhanced Due Diligence (EDD) lookups introduces operational latency and high labor overhead. By engineering an automated backend data pipeline, this framework segregates the high-vulnerability 34.8% customer cohort instantly. This allows data-driven risk management teams to optimize resource allocation, automate audit trails, and drastically minimize manual data processing overhead.
 
-![AML KYC Dashboard](screenshots/dashboard.png)
+## Dashboard Preview
+![Financial Risk Analytics & Customer Segmentation](screenshots/dashboard_Analytics.png)
 
 ## Objectives
-* **Isolate High-Risk Segments:** Segment customer databases to prioritize high-risk profiles and optimize compliance resource allocation.
-* **Map Regulatory Risk Exposure:** Evaluate country-wise and occupation-wise exposure using frameworks aligned with FATF (Financial Action Task Force) and Wolfsberg Group standards.
-* **Assess PEP Vulnerabilities:** Quantify the statistical risk impact of Politically Exposed Persons (PEPs) across different financial buckets.
-* **Automate Compliance Reporting:** Eliminate manual data extraction bottlenecks by engineering an automated database-to-Excel Python data pipeline.
+* **ETL Pipeline Automation:** Eliminate manual data-pull dependencies by engineering an automated database-to-spreadsheet pipeline wrapper.
+* **Statistical Risk Segmentation:** Conduct database profiling and cohort filters to isolate, structure, and prioritize high-risk customer data clusters.
+* **Regulatory Compliance Mapping:** Group and evaluate geographic and occupational risk scores against active international standards (FATF and Wolfsberg Group guidelines).
+* **Business Intelligence (BI) Deployment:** Construct an interactive reporting dashboard to enable seamless monitoring of compliance KPIs and risk vectors.
 
 ## Dataset Description
-The dataset models core KYC and behavioral banking metrics across 500 customer accounts:
+The dataset models core onboarding, demographic, and behavioral banking variables across 500 simulated consumer records:
 * `Customer_ID`, `Age`, `Country`, `Occupation`, `Annual_Income`
 * `Monthly_Transactions`, `Avg_Transaction_Value`
 * `PEP Status`, `High_Risk_Country`, `Risk_Score`, `Risk_Category`
 
 ## Tools Used
-* **Database Management:** PostgreSQL (pgAdmin)
+* **Database Management & Querying:** PostgreSQL (pgAdmin)
 * **Automation Engineering:** Python (Pandas, SQLAlchemy, Psycopg2, Openpyxl)
-* **Data Visualization & Analytics:** Microsoft Excel (Pivot Tables, Charts, Slicers)
+* **Data Visualization & Business Intelligence:** Microsoft Excel (Pivot Tables, Charts, Slicers)
 * **Version Control:** GitHub
 
 ## Architecture & Data Pipeline Workflow
-1. **Data Ingestion & Storage:** Raw customer onboarding data is securely housed and queried within a structured PostgreSQL database environment.
-2. **Automated Extraction (The Python Layer):** A headless Python script (`AML.py`) uses `SQLAlchemy` to establish an authenticated local bridge to the PostgreSQL engine.
-3. **Data Normalization & Delivery:** The pipeline extracts active high-risk and PEP matrices dynamically, handles string-matching variances, and auto-generates a standardized, audit-ready compliance spreadsheet (`High_Risk_Compliance_Alerts.xlsx`) instantly.
+1. **Data Ingestion & Storage:** Raw customer records are structured and managed within a local PostgreSQL database instance to ensure efficient relational querying.
+2. **The Extraction Layer (Python Engine):** A headless Python script (`AML.py`) leverages `SQLAlchemy` and `psycopg2` drivers to establish an authenticated connection pool directly to the relational database.
+3. **The Transformation Layer (Pandas DataFrame):** Data queries are automatically piped into Pandas DataFrames to perform data formatting, text normalization, and resolve strict string-matching case variances.
+4. **The Loading Layer (Excel Output):** Using the `openpyxl` writing engine, the script outputs a clean, structured, and audit-ready reporting spreadsheet (`High_Risk_Compliance_Alerts.xlsx`) on demand.
 
-## Key Insights & Governance Findings
-* **Targeted High-Risk Cohort:** Isolated a concentrated 34.8% segment (174 out of 500 accounts) classified as High Risk.
-    ```sql
-  -- Prioritized EDD Queue Filter
+## Analytics Insights & Governance Findings
+* **Targeted Cohort Extraction:** Isolated a concentrated 34.8% segment (174 out of 500 records) flagged strictly as "High Risk." 
+  ```sql
+  -- Prioritized EDD Queue Filter & Conditional Segmentation
   SELECT 
       customer_id, 
       country, 
@@ -47,16 +50,16 @@ The dataset models core KYC and behavioral banking metrics across 500 customer a
           WHEN pep_status = 'Yes' OR high_risk_country = 'Yes' THEN 'High Priority Review'
           ELSE 'Standard Monitoring'
       END AS edd_risk_flag
-  FROM compliance_database;
+  FROM aml_customers;
   ```
-  * **Alert Optimization:** While Medium-Risk customers form the largest segment (277), a variance analysis indicates that tweaking the transaction volume threshold by 10% could safely reclassify low-risk activity, potentially reducing compliance alert volume by 15% without increasing risk exposure.
-* **Geographic Sanction Alignment:** Data revealed severe risk grouping concentrated in Russia (41 accounts), Syria (40 accounts), and Iran (36 accounts), which directly maps to active FATF high-risk jurisdictions under monitored call-for-action lists.
-* **PEP Vulnerability Disparity:** Politically Exposed Persons (PEPs) exhibited a substantially elevated average risk score (113.86) compared to non-PEP customers (95.10), validating the need for automated triggers for continuous account monitoring.
-* **Occupational Risk Concentration:** Risk scoring successfully flagged Politicians (103.4) and Business Owners (100.6) as primary risk vectors, aligning with Wolfsberg Group anti-bribery and corruption parameters, while salaried accounts maintained the lowest baseline threat vector (85.0).
+* **Alert Volume Optimization:** Data modeling shows that while Medium-Risk customers form the largest group (277), a query variance analysis suggests that tuning transaction volume thresholds by 10% can safely reclassify baseline activity, potentially reducing operational alert noise by 15%.
+* **Geographic Risk Alignment:** Query groupings revealed significant risk concentrations inside Russia (41 accounts), Syria (40 accounts), and Iran (36 accounts), matching active FATF high-risk jurisdictions under monitored call-for-action frameworks.
+* **PEP Vulnerability Disparity:** Descriptive analysis calculated that Politically Exposed Persons (PEPs) carried a significantly higher average risk score (113.86) versus standard consumer accounts (95.10), proving the critical need for automated database flags.
+* **Occupational Threat Clustering:** Data rules successfully flagged Politicians (103.4 average risk) and Business Owners (100.6) as primary risk vectors—aligning with Wolfsberg Group anti-bribery parameters—while salaried accounts maintained the lowest baseline signature (85.0).
 
 ## Repository Structure
 ```text
-Financial-Crime-Risk-Analysis/
+Customer-Risk-Profiling-Pipeline/
 │
 ├── README.md
 ├── dataset/
@@ -66,15 +69,18 @@ Financial-Crime-Risk-Analysis/
 ├── python_pipeline/
 │   └── AML.py                     # Automated Data Extraction Engine
 ├── outputs/                       # Python-generated automation outputs
-│   └── High_Risk_Compliance_Alerts.xls                  
+│   └── High_Risk_Compliance_Alerts.xlsx                  
 ├── dashboard/
 │   └── Financial-Crime-Risk-Analysis-Dashboard.xlsx     # Interactive Visual Layer
 └── screenshots/
-    ├── dashboard.png
+    ├── dashboard_Analytics.png
     └── execution_success.png
 ```
+
 ## Conclusion
-This framework demonstrates how bridging relational databases with automated Python scripting solves critical operational bottlenecks in Financial Crime compliance. By transforming static customer records into an automated, audit-ready data pipeline, the project showcases data analytics' practical, cost-saving application in modern risk management.
+This framework showcases how connecting a relational database backend with automated Python data scripts resolves critical pipeline bottlenecks. By transforming flat customer tables into an automated, structured data delivery pipeline, the project demonstrates the high-value, cost-saving application of data science and business intelligence in modern corporate risk management.
 
 ## Author
 **Surbhi Sharma Panchal**
+
+
