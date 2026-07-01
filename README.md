@@ -23,7 +23,7 @@ In production banking systems, manual spreadsheet extraction for Enhanced Due Di
 The dataset models core onboarding, demographic, and behavioral banking variables across 500 simulated consumer records:
 * `Customer_ID`, `Age`, `Country`, `Occupation`, `Annual_Income`
 * `Monthly_Transactions`, `Avg_Transaction_Value`
-* `PEP Status`, `High_Risk_Country`, `Risk_Score`, `Risk_Category`
+* `PEP`, `High_Risk_Country`, `Risk_Score`, `Risk_Category`
 
 ## Tools Used
 * **Database Management & Querying:** PostgreSQL (pgAdmin)
@@ -44,10 +44,10 @@ The dataset models core onboarding, demographic, and behavioral banking variable
   SELECT 
       customer_id, 
       country, 
-      pep_status,
+      Pep,
       CASE 
-          WHEN pep_status = 'Yes' AND high_risk_country = 'Yes' THEN 'Immediate EDD Request'
-          WHEN pep_status = 'Yes' OR high_risk_country = 'Yes' THEN 'High Priority Review'
+          WHEN pep = 'Yes' AND high_risk_country = 'Yes' THEN 'Immediate EDD Request'
+          WHEN pep = 'Yes' OR high_risk_country = 'Yes' THEN 'High Priority Review'
           ELSE 'Standard Monitoring'
       END AS edd_risk_flag
   FROM aml_customers;
@@ -65,7 +65,7 @@ Customer-Risk-Profiling-Pipeline/
 ├── dataset/
 │   └── customers.csv
 ├── sql_queries/
-│   └── Financial-Crime-Risk-Analysis.sql
+│   └── Financial Risk Analytics & Customer Segmentation Engine.sql
 ├── python_pipeline/
 │   └── AML.py                     # Automated Data Extraction Engine
 ├── outputs/                       # Python-generated automation outputs
